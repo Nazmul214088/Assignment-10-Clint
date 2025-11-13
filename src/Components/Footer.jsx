@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="mt-8 lg:mt-0 w-full sm:col-span-2">
           <h1 className="text-3xl font-bold">ARTIFY Industries Ltd.</h1>
           <p>Providing reliable tech since 2025</p>
-          <div class="footer-section contact">
+          <div className="footer-section contact">
             <h2 className="footer-title mt-2 mb-[-5px] underline">
               Contact Info:
             </h2>

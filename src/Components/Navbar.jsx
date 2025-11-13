@@ -1,9 +1,25 @@
 import React, { use } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "./AuthContext/AuthContext";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const { user } = use(AuthContext);
+  const { user, signOutUser, setUser, setSignUpUser, signUpUser } =
+    use(AuthContext);
+
+  const handleSignOutBtn = () => {
+    signOutUser()
+      .then(() => {
+        toast.success("User sign out is successfully done.", {
+          position: "top-center",
+        });
+        setUser(null);
+        setSignUpUser(null);
+      })
+      .catch(() => {
+        toast.error("Error!");
+      });
+  };
   const links = (
     <>
       <li>
@@ -28,11 +44,15 @@ const Navbar = () => {
     </>
   );
 
-  const logOrRegister = (
+  const login = (
     <>
       <li>
         <NavLink to={"/registration"}>Registration</NavLink>
       </li>
+    </>
+  );
+  const registration = (
+    <>
       <li>
         <NavLink to={"/login"}>Login</NavLink>
       </li>
@@ -80,11 +100,30 @@ const Navbar = () => {
       <div className="navbar-end">
         <ul className="menu menu-horizontal px-1">
           {user ? (
-            <li>
-              <img src="" alt="userPhoto" />
+            <li className="dropdown dropdown-hover">
+              <div tabIndex={0} role="button" className="btn m-1">
+                <img
+                  className="w-15 rounded-full"
+                  src={user.photoURL}
+                  alt="userPhoto"
+                />
+              </div>
+              <ul
+                tabIndex="-1"
+                className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+              >
+                <li>
+                  <a>{user.displayName}</a>
+                </li>
+                <li>
+                  <button onClick={handleSignOutBtn}>Logout</button>
+                </li>
+              </ul>
             </li>
+          ) : signUpUser ? (
+            registration
           ) : (
-            logOrRegister
+            login
           )}
         </ul>
       </div>

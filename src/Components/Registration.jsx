@@ -1,8 +1,54 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "./AuthContext/AuthContext";
+import { updateProfile } from "firebase/auth";
+import { toast } from "react-toastify";
 const Registration = () => {
   const [showEye, setShowEye] = useState(false);
+  const { createUser, signUpWithGoogle, setSignUpUser } = use(AuthContext);
+  const navigate = useNavigate();
+  //create user
+  const handleRegistrationBtn = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const photoUrl = e.target.photoUrl.value;
+    createUser(email, password)
+      .then((createUser) => {
+        const user = createUser.user;
+        updateProfile(user, {
+          displayName: name,
+          photoURL: photoUrl,
+        })
+          .then(() => {
+            console.log(user);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+        toast.success("Create user is successful!", {
+          position: "top-center",
+        });
+        setSignUpUser(user);
+        navigate("/login");
+      })
+      .catch((error) => console.log(error.message));
+  };
+  //Create user with google
+  const handleSignUpWithGoogleBtn = () => {
+    signUpWithGoogle()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        toast.success("User SignUp Successful!", {
+          position: "top-center",
+        });
+      })
+      .catch((error) => console.log(error.message));
+  };
+
   const handleEyeBtn = () => {
     setShowEye(!showEye);
   };
@@ -12,23 +58,35 @@ const Registration = () => {
         <h1 className="text-center lg:text-left text-5xl font-semibold py-4">
           Registration now!
         </h1>
-        <form>
+        <form onSubmit={(e) => handleRegistrationBtn(e)}>
           <fieldset className="fieldset">
             <label className="label">Name</label>
-            <input type="text" className="input w-full" placeholder="Name" />
+            <input
+              type="text"
+              name="name"
+              className="input w-full"
+              placeholder="Name"
+            />
             <label className="label">Photo URL</label>
             <input
               type="url"
               className="input w-full"
+              name="photoUrl"
               placeholder="Photo URL"
             />
             <label className="label">Email</label>
-            <input type="email" className="input w-full" placeholder="Email" />
+            <input
+              type="email"
+              name="email"
+              className="input w-full"
+              placeholder="Email"
+            />
             <label className="label">Password</label>
             <div className="relative">
               <input
                 type={showEye ? "text" : "password"}
                 className="input w-full"
+                name="password"
                 placeholder="Password"
               />
               <button
@@ -43,7 +101,10 @@ const Registration = () => {
           </fieldset>
         </form>
         {/* Google */}
-        <button className="btn bg-white text-black border-[#e5e5e5]">
+        <button
+          onClick={handleSignUpWithGoogleBtn}
+          className="btn bg-white text-black border-[#e5e5e5]"
+        >
           <svg
             aria-label="Google logo"
             width="16"

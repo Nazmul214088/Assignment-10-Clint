@@ -1,28 +1,57 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "./AuthContext/AuthContext";
+import { toast } from "react-toastify";
 const Login = () => {
   const [showEye, setShowEye] = useState(false);
-
+  const { signInWithEmail, setUser, user } = use(AuthContext);
+  const navigate = useNavigate();
   const handleEyeBtn = () => {
     setShowEye(!showEye);
   };
+  //SignIn with Email and password
+  const handleLogInBtn = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    signInWithEmail(email, password)
+      .then((result) => {
+        const currentUser = result.user;
+        toast.success("User Login Successfully Done!", {
+          position: "top-center",
+        });
+        setUser(currentUser);
+        console.log(user);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <div className="card bg-base-100 mx-auto my-18 w-full max-w-md shrink-0 shadow-2xl">
       <div className="card-body">
         <h1 className="text-center lg:text-left text-5xl font-semibold py-4">
           Login now!
         </h1>
-        <form>
+        <form onSubmit={(e) => handleLogInBtn(e)}>
           <fieldset className="fieldset">
             <label className="label">Email</label>
-            <input type="email" className="input w-full" placeholder="Email" />
+            <input
+              type="email"
+              name="email"
+              className="input w-full"
+              placeholder="Email"
+            />
             <label className="label">Password</label>
             <div className="relative">
               <input
                 type={showEye ? "text" : "password"}
                 className="input w-full"
                 placeholder="Password"
+                name="password"
               />
               <button
                 type="button"
