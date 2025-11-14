@@ -9,6 +9,7 @@ import MyGallery from "../Pages/MyGallery";
 import MyFavorites from "../Pages/MyFavorites";
 import Registration from "../Components/Registration";
 import Login from "../Components/Login";
+import MediumForm from "../Components/Practice";
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
             <MyFavorites />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/practice",
+        Component: MediumForm,
       },
     ],
   },
