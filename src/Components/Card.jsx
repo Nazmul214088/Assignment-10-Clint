@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router";
 
 const Card = ({ artwork }) => {
   const { artworkTitle, artworkPhotoUrl, artistName, category } = artwork;
@@ -27,9 +28,13 @@ const Card = ({ artwork }) => {
           </div>
         </div>
         <div className="card-actions justify-center">
-          <button className="btn text-2xl font-semibold mt-5 w-full">
+          <Link
+            to={`/AddArtwork/${artwork._id}`}
+            state={{ artworkData: artwork }}
+            className="btn text-2xl font-semibold mt-5 w-full"
+          >
             Show Details
-          </button>
+          </Link>
         </div>
       </div>
     </div>

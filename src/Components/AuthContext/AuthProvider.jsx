@@ -12,6 +12,7 @@ import { auth } from "../../Firebase/Firebase";
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [signUpUser, setSignUpUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Must start as true
 
   //Create user with email and password
   const createUser = (email, password) => {
@@ -37,12 +38,15 @@ const AuthProvider = ({ children }) => {
     // Firebase observer for login/logout changes
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
   const authInfo = {
+    loading,
+    setLoading,
     user,
     setUser,
     signUpUser,

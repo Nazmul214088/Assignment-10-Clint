@@ -4,7 +4,9 @@ import { AuthContext } from "../Components/AuthContext/AuthContext";
 
 const PrivateRoute = ({ children }) => {
   const location = useLocation();
-  const { user, loading } = use(AuthContext);
+  const { user, loading } = use(AuthContext); // Assuming 'use' is React's useContext/use
+
+  // 1. Loading Check: Essential for preventing the redirect
   if (loading) {
     return (
       <div className="text-center">
@@ -12,11 +14,13 @@ const PrivateRoute = ({ children }) => {
       </div>
     );
   }
+
+  // 2. User Check: If loading is false, check if a user exists
   if (user) {
     return children;
   }
 
+  // 3. Redirect: If loading is false and user is null, redirect
   return <Navigate state={location?.pathname} to={"/registration"}></Navigate>;
 };
-
 export default PrivateRoute;
