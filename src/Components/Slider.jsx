@@ -35,7 +35,7 @@ const Slider = () => {
     >
       <SwiperSlide className="flex items-center justify-center">
         <img
-          className="p-14 w-full mx-auto object-cover"
+          className="w-[calc(100%-100px)] mx-auto aspect-[16/9] object-cover"
           src={first}
           alt="First Slide"
         />
@@ -43,7 +43,7 @@ const Slider = () => {
 
       <SwiperSlide className="flex items-center justify-center">
         <img
-          className="p-14 w-full mx-auto object-cover"
+          className="w-[calc(100%-100px)] mx-auto aspect-[16/9] object-cover"
           src={second}
           alt="Second Slide"
         />
@@ -51,7 +51,7 @@ const Slider = () => {
 
       <SwiperSlide className="flex items-center justify-center">
         <img
-          className="p-14 w-full mx-auto object-cover"
+          className="w-[calc(100%-100px)] mx-auto aspect-[16/9] object-cover"
           src={third}
           alt="Third Slide"
         />
@@ -59,14 +59,14 @@ const Slider = () => {
 
       <SwiperSlide className="flex items-center justify-center">
         <img
-          className="p-14 w-full mx-auto object-cover"
+          className="w-[calc(100%-100px)] mx-auto aspect-[16/9] object-cover"
           src={fourth}
           alt="Fourth Slide"
         />
       </SwiperSlide>
       <SwiperSlide className="flex items-center justify-center">
         <img
-          className="p-14 w-full mx-auto object-cover"
+          className="w-[calc(100%-100px)] mx-auto aspect-[16/9] object-cover"
           src={fifth}
           alt="Fourth Slide"
         />

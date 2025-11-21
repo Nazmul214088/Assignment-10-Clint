@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext/AuthContext";
 import { toast } from "react-toastify";
 const Login = () => {
   const [showEye, setShowEye] = useState(false);
-  const { signInWithEmail, setUser, user } = use(AuthContext);
+  const { signInWithEmail, setUser} = use(AuthContext);
   const navigate = useNavigate();
   const handleEyeBtn = () => {
     setShowEye(!showEye);
@@ -22,11 +22,10 @@ const Login = () => {
           position: "top-center",
         });
         setUser(currentUser);
-        console.log(user);
         navigate("/");
       })
       .catch((error) => {
-        console.log(error.message);
+        toast.error(error.message,{position:"top-center"});
       });
   };
 

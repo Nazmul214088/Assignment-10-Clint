@@ -15,6 +15,14 @@ const Registration = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const photoUrl = e.target.photoUrl.value;
+    const RegExp =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    // if (!RegExp.test(password)) {
+    //   toast.error(
+    //     " Password must contain at least 8 characters, including uppercase, lowercase, number, and special character."
+    //   );
+    //   return;
+    // }
     createUser(email, password)
       .then((createUser) => {
         const user = createUser.user;
@@ -23,10 +31,10 @@ const Registration = () => {
           photoURL: photoUrl,
         })
           .then(() => {
-            console.log(user);
+            // console.log(user);
           })
           .catch((error) => {
-            console.log(error.message);
+            toast.error(error.message);
           });
         toast.success("Create user is successful!", {
           position: "top-center",
@@ -34,19 +42,17 @@ const Registration = () => {
         setSignUpUser(user);
         navigate("/login");
       })
-      .catch((error) => console.log(error.message));
+      .catch((error) => toast.error(error.message));
   };
   //Create user with google
   const handleSignUpWithGoogleBtn = () => {
     signUpWithGoogle()
-      .then((result) => {
-        const user = result.user;
-        console.log(user);
+      .then(() => {
         toast.success("User SignUp Successful!", {
           position: "top-center",
         });
       })
-      .catch((error) => console.log(error.message));
+      .catch((error) => toast.error(error.message));
   };
 
   const handleEyeBtn = () => {

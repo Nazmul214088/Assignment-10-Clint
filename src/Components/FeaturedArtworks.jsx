@@ -9,7 +9,6 @@ const FeaturedArtworks = () => {
       .then((res) => res.json())
       .then((data) => setAllArtworks(data));
   }, []);
-  console.log(allArtworks);
   return (
     <div>
       <h1 className="text-center text-5xl font-black py-5 my-5 bg-[#0f12b936]">

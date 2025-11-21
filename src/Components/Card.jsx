@@ -1,11 +1,36 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
+import { toast } from "react-toastify";
 
 const Card = ({ artwork }) => {
-  const { artworkTitle, artworkPhotoUrl, artistName, category } = artwork;
-  const [like, setLike] = useState(0);
-  const handleLikeBtn = () => {
-    setLike(like + 1);
+  const {
+    _id,
+    artworkTitle,
+    artworkPhotoUrl,
+    artistName,
+    category,
+    totalLike,
+  } = artwork;
+
+  const [like, setLike] = useState(totalLike || 0);
+
+  const handleLikeBtn = async () => {
+    const newLikeCount = like + 1;
+    setLike(newLikeCount);
+    console.log(typeof newLikeCount);
+    const updatedArtwork = { totalLike: newLikeCount };
+    const res = await fetch(`http://localhost:5000/artworks/${_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedArtwork),
+    });
+    const data = await res.json();
+    if (data.modifiedCount) {
+      setLike(totalLike);
+      toast.success("Like Successfully!", { position: "top-center" });
+    }
   };
   return (
     <div className="card border border-[#70000025] transition duration-500 hover:shadow-[0_4px_15px_#0c17b8b4] hover:translate-y-[-5px]">
@@ -21,7 +46,7 @@ const Card = ({ artwork }) => {
         <div className="flex justify-between py-2 my-2 border border-[#2a01e056] rounded-lg p-2">
           <h2 className="text-lg font-semibold">Category: {category}</h2>
           <div className="flex gap-2">
-            <p className="text-2xl font-bold">{like}</p>
+            <p className="text-2xl font-bold">{totalLike ? totalLike : like}</p>
             <button onClick={handleLikeBtn} className="btn">
               <i className="fa-regular fa-thumbs-up text-2xl"></i>
             </button>

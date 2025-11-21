@@ -4,7 +4,6 @@ import GalleryCard from "../Components/GalleryCard";
 const MyGallery = () => {
   const { user } = use(AuthContext);
   const [allArtworks, setAllArtworks] = useState([]);
-  console.log(user.email);
   useEffect(() => {
     fetch("http://localhost:5000/artworks")
       .then((res) => res.json())
@@ -12,17 +11,19 @@ const MyGallery = () => {
         setAllArtworks(data);
       });
   }, []);
-  console.log(allArtworks);
   const filterData = allArtworks.filter(
     (artwork) => artwork.email === user.email
   );
-  console.log(filterData);
   return (
     <div>
-      <h1>MyGallery</h1>
+      <h1 className="text-center text-5xl font-black py-5 my-2 bg-[#0f12b936]">
+        MyGallery
+      </h1>
       <div>
         {filterData.length === 0 ? (
-          <h2>no artwork</h2>
+          <h2 className="text-center text-3xl font-semibold py-3 my-1 bg-[#b90f0f8c]">
+            No Artwork
+          </h2>
         ) : (
           <>
             <div className="grid md:grid-cols-2 lg:grid-cols-3">
