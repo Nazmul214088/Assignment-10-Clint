@@ -24,6 +24,7 @@ const AddArtwork = () => {
     const form = e.target;
     const artData = {
       artistName: form.name.value,
+      artistPhotoUrl: form.artistPhotoURL.value,
       email: form.email.value,
       artworkPhotoUrl: form.photoUrl.value,
       artworkTitle: form.artworkTitle.value,
@@ -31,11 +32,11 @@ const AddArtwork = () => {
       visibility: visibility,
       category: category,
       mediumTools: selectedTools,
-      uploadTime: currentTime
+      uploadTime: currentTime,
+      totalLike: 0,
     };
-    console.log(artData);
     // Send data to server
-    fetch("http://localhost:5000/artworks", {
+    fetch("https://artify-server-site-six.vercel.app/artworks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,6 +72,15 @@ const AddArtwork = () => {
               readOnly
             />
 
+            {/* PhotoURL */}
+            <label className="label">Artist PhotoURL</label>
+            <input
+              type="url"
+              name="artistPhotoURL"
+              className="input w-full"
+              defaultValue={user.photoURL}
+              readOnly
+            />
             {/* Email */}
             <label className="label">Email</label>
             <input

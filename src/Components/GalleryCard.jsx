@@ -1,47 +1,55 @@
 import React from "react";
-import { toast } from "react-toastify";
 
-const GalleryCard = ({ data }) => {
+const GalleryCard = ({ data, onUpdate, onDelete }) => {
   const {
     _id,
     artworkPhotoUrl,
     artistName,
     artworkTitle,
-    mediumTools,
+    mediumTools = [],
     artworkDescription,
+    visibility,
+    category,
   } = data;
 
-  const handleDeleteBtn = (id) => {
-    fetch(`http://localhost:5000/artworks/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => {
-        toast.success("Deletion complete!", {
-          position: "top-center",
-        });
-        window.location.reload();
-        return res.json();
-      })
-      .then((data) => {
-        console.log("Server response data:", data);
-      })
-      .catch((error) => {
-        console.error("Error during delete operation:", error);
-        toast.error("An error occurred during deletion.");
-      });
+  const modalId = `edit_modal_${_id}`;
+
+  const handleUpdateSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const checkedTools = Array.from(
+      form.querySelectorAll('input[name="mediumTools"]:checked')
+    ).map((el) => el.value);
+
+    const updatedData = {
+      artworkPhotoUrl: form.photoUrl.value,
+      artworkTitle: form.artworkTitle.value,
+      artworkDescription: form.artworkDescription.value,
+      visibility: form.visibility.value,
+      category: form.category.value,
+      mediumTools: checkedTools,
+    };
+
+    onUpdate(_id, updatedData);
+
+    // ✅ close modal after submit
+    const modal = document.getElementById(modalId);
+    if (modal) modal.close();
   };
 
   return (
     <div className="card bg-base-100 w-full px-10 shadow-sm grid items-center">
       <div>
-        <div className="w-full">
+        <div className="w-full lg:flex">
           <figure className="basis-1/2">
             <img
-              className="w-full aspect-[16/9] rounded-xl"
+              className="w-full aspect-video rounded-xl"
               src={artworkPhotoUrl}
-              alt="Shoes"
+              alt={artworkTitle}
             />
           </figure>
+
           <div className="px-5 py-2">
             <h2 className="text-3xl font-bold">Title: {artworkTitle}</h2>
             <h2 className="text-2xl">
@@ -57,81 +65,78 @@ const GalleryCard = ({ data }) => {
             </h2>
           </div>
         </div>
+
         <p className="text-justify px-5 pb-2">
           <span className="font-bold">Description:</span> {artworkDescription}
         </p>
       </div>
+
       <div className="flex justify-between mt-4 p-2">
         <button
-          onClick={() => document.getElementById("my_modal_5").showModal()}
+          onClick={() => document.getElementById(modalId)?.showModal()}
           className="btn transition duration-500 hover:shadow-[0_4px_15px_#0c17b8b4]"
         >
           Edit Artwork
         </button>
+
         <button
-          onClick={() => handleDeleteBtn(_id)}
+          onClick={() => onDelete(_id)}
           className="btn transition duration-500 hover:shadow-[0_4px_15px_#0c17b8b4]"
         >
           Delete Artwork
         </button>
       </div>
 
-      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+      {/* ✅ unique modal id per card */}
+      <dialog id={modalId} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
-          <form>
+          <form onSubmit={handleUpdateSubmit}>
             <fieldset className="fieldset">
-              {/* Artwork Photo URL */}
               <label className="label">Artwork Photo URL</label>
               <input
                 type="url"
                 name="photoUrl"
+                defaultValue={artworkPhotoUrl}
                 className="input w-full"
-                placeholder="Artwork Photo URL"
                 required
               />
 
-              {/* Artwork Title */}
               <label className="label">Artwork Title</label>
               <input
                 type="text"
                 name="artworkTitle"
                 className="input w-full"
-                placeholder="Artwork Title"
+                defaultValue={artworkTitle}
                 required
               />
 
-              {/* Artwork Description */}
               <label className="label">Artwork Description</label>
               <textarea
                 name="artworkDescription"
                 className="textarea w-full"
                 rows="5"
-                placeholder="Artwork Description"
+                defaultValue={artworkDescription}
                 required
-              ></textarea>
+              />
 
-              {/* Visibility */}
               <label className="label">Visibility</label>
               <select
-                // onChange={(e) => setVisibility(e.target.value)}
-                defaultValue="Visibility"
+                name="visibility"
                 className="select select-md w-full"
+                defaultValue={visibility || "Public"}
                 required
               >
-                <option disabled>Visibility</option>
                 <option>Public</option>
                 <option>Private</option>
               </select>
 
-              {/* Category */}
               <label className="label">Category</label>
               <select
-                // onChange={(e) => setCategory(e.target.value)}
-                defaultValue="Category"
                 className="select select-md w-full"
+                name="category"
+                defaultValue={category || "Painting"}
                 required
               >
-                <option disabled>Category</option>
                 <option>Abstract expressionism</option>
                 <option>Impressionism</option>
                 <option>Painting</option>
@@ -140,7 +145,6 @@ const GalleryCard = ({ data }) => {
                 <option>Literature</option>
               </select>
 
-              {/* Medium / Tools */}
               <label className="label">Medium/Tools</label>
               <div className="w-full grid grid-cols-2 gap-1 ml-4">
                 {[
@@ -153,9 +157,10 @@ const GalleryCard = ({ data }) => {
                 ].map((tool) => (
                   <div key={tool} className="flex items-center gap-1">
                     <input
+                      name="mediumTools"
                       type="checkbox"
                       value={tool}
-                      // onChange={handleCheckboxChange}
+                      defaultChecked={mediumTools.includes(tool)}
                       className="checkbox"
                     />
                     <label>{tool}</label>
@@ -163,15 +168,18 @@ const GalleryCard = ({ data }) => {
                 ))}
               </div>
 
-              <button type="submit" className="btn btn-neutral mt-4">
-                Add Artwork
+              <button
+                type="submit"
+                className="btn btn-neutral mt-4 hover:bg-linear-to-r from-[#1B1464] to-[#5759bb83] transition duration-500 hover:shadow-[0_4px_15px_#0c17b8b4]"
+              >
+                Update Artwork
               </button>
             </fieldset>
           </form>
+
           <div className="modal-action">
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn">Close</button>
+              <button className="btn">Cancel</button>
             </form>
           </div>
         </div>

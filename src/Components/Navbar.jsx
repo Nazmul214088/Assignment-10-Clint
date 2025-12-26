@@ -22,23 +22,23 @@ const Navbar = () => {
   };
   const links = (
     <>
-      <li>
+      <li className="text-xl font-semibold">
         <NavLink to={"/"}>Home</NavLink>
       </li>
-      <li>
+      <li className="text-xl font-semibold">
         <NavLink to={"/ExploreArtworks"}>Explore Artworks</NavLink>
       </li>
     </>
   );
   const privateLinks = (
     <>
-      <li>
+      <li className="text-xl font-semibold">
         <NavLink to={"/AddArtwork"}>Add Artwork</NavLink>
       </li>
-      <li>
+      <li className="text-xl font-semibold">
         <NavLink to={"/MyGallery"}>My Gallery</NavLink>
       </li>
-      <li>
+      <li className="text-xl font-semibold">
         <NavLink to={"/MyFavorites"}>My Favorites</NavLink>
       </li>
     </>
@@ -46,14 +46,14 @@ const Navbar = () => {
 
   const login = (
     <>
-      <li>
+      <li className="text-xl font-semibold">
         <NavLink to={"/registration"}>Registration</NavLink>
       </li>
     </>
   );
   const registration = (
     <>
-      <li>
+      <li className="text-xl font-semibold">
         <NavLink to={"/login"}>Login</NavLink>
       </li>
     </>
