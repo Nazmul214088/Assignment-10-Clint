@@ -36,7 +36,7 @@ const AddArtwork = () => {
       totalLike: 0,
     };
     // Send data to server
-    fetch("https://artify-server-site-six.vercel.app/artworks", {
+    fetch("http://localhost:5000/artworks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

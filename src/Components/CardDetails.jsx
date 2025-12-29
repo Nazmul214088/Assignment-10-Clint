@@ -14,7 +14,7 @@ const CardDetails = () => {
 
   const [totalWork, setTotalWork] = useState(0);
   useEffect(() => {
-    fetch("https://artify-server-site-six.vercel.app/artworks")
+    fetch("http://localhost:5000/artworks")
       .then((res) => res.json())
       .then((data) => {
         const userEmail = artwork.email;
@@ -32,12 +32,9 @@ const CardDetails = () => {
       try {
         setLoading(true);
 
-        const res = await fetch(
-          `https://artify-server-site-six.vercel.app/artworks/${artworkId}`,
-          {
-            signal: controller.signal,
-          }
-        );
+        const res = await fetch(`http://localhost:5000/artworks/${artworkId}`, {
+          signal: controller.signal,
+        });
 
         if (!res.ok) {
           // fallback to location.state data (prevents blank + spinner stuck)
@@ -75,14 +72,11 @@ const CardDetails = () => {
     try {
       const payload = { ...artwork, myEmail: user?.email };
 
-      const res = await fetch(
-        `https://artify-server-site-six.vercel.app/favorite/${user.email}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
+      const res = await fetch(`http://localhost:5000/favorite/${user.email}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
       const result = await res.json();
       if (result.insertedId) {
@@ -106,14 +100,11 @@ const CardDetails = () => {
     setLike(prev + 1);
 
     try {
-      const res = await fetch(
-        `https://artify-server-site-six.vercel.app/artworks/${_id}/like`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userEmail: user.email }),
-        }
-      );
+      const res = await fetch(`http://localhost:5000/artworks/${_id}/like`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userEmail: user.email }),
+      });
 
       const data = await res.json();
 

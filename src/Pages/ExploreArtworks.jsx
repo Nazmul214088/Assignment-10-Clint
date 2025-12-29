@@ -6,7 +6,7 @@ const ExploreArtworks = () => {
   const [artworks, setArtworks] = useState([]); // filtered + searched data
 
   useEffect(() => {
-    fetch("https://artify-server-site-six.vercel.app/artworks")
+    fetch("http://localhost:5000/artworks")
       .then((res) => res.json())
       .then((data) => {
         setAllArtworks(data);
