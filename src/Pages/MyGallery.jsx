@@ -11,7 +11,7 @@ const MyGallery = () => {
   // Fetch all artworks
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:5000/artworks")
+    fetch("https://artify-server-site-navy.vercel.app/artworks")
       .then((res) => res.json())
       .then((data) => setArtworks(Array.isArray(data) ? data : []))
       .catch((err) => console.error(err))
@@ -27,7 +27,7 @@ const MyGallery = () => {
 
   // Delete artwork
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/artworks/${id}`, {
+    fetch(`https://artify-server-site-navy.vercel.app/artworks/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -49,7 +49,7 @@ const MyGallery = () => {
 
   // Update artwork
   const handleUpdate = (id, updatedData) => {
-    fetch(`http://localhost:5000/artworks/${id}`, {
+    fetch(`https://artify-server-site-navy.vercel.app/artworks/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedData),

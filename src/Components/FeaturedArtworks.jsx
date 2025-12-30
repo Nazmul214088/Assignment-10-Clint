@@ -5,7 +5,7 @@ const FeaturedArtworks = () => {
   const [allArtworks, setAllArtworks] = useState([]); // original data
   useEffect(() => {
     // Fetches artworks sorted from newest to oldest
-    fetch("http://localhost:5000/artworks/recent")
+    fetch("https://artify-server-site-navy.vercel.app/artworks/recent")
       .then((res) => res.json())
       .then((data) => setAllArtworks(data));
   }, []);

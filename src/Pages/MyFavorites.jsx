@@ -10,7 +10,7 @@ const MyFavorites = () => {
   useEffect(() => {
     // Fetches artworks sorted from newest to oldest
     if (!user) return;
-    fetch("http://localhost:5000/favorite")
+    fetch("https://artify-server-site-navy.vercel.app/favorite")
       .then((res) => res.json())
       .then((data) => {
         const filterData = data.filter((d) => d.myEmail === user.email);
@@ -20,7 +20,7 @@ const MyFavorites = () => {
 
   // Delete favorites
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/favorite/${id}`, {
+    fetch(`https://artify-server-site-navy.vercel.app/favorite/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
