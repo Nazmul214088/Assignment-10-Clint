@@ -5,11 +5,10 @@ import Footer from "../Components/Footer";
 
 const Root = () => {
   return (
-    <div>
-      {/* {useTitle("Home Page")} */}
-      <Navbar></Navbar>
-      <Outlet></Outlet>
-      <Footer></Footer>
+    <div className="dark:bg-[#070d20]">
+      <Navbar />
+      <Outlet />
+      <Footer />
     </div>
   );
 };

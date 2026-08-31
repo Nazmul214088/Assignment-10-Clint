@@ -11,7 +11,7 @@ const MyGallery = () => {
   // Fetch all artworks
   useEffect(() => {
     setLoading(true);
-    fetch("https://artify-server-site-navy.vercel.app/artworks")
+    fetch("http://localhost:3000/artworks")
       .then((res) => res.json())
       .then((data) => setArtworks(Array.isArray(data) ? data : []))
       .catch((err) => console.error(err))
@@ -27,7 +27,7 @@ const MyGallery = () => {
 
   // Delete artwork
   const handleDelete = (id) => {
-    fetch(`https://artify-server-site-navy.vercel.app/artworks/${id}`, {
+    fetch(`http://localhost:3000/artworks/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -49,7 +49,7 @@ const MyGallery = () => {
 
   // Update artwork
   const handleUpdate = (id, updatedData) => {
-    fetch(`https://artify-server-site-navy.vercel.app/artworks/${id}`, {
+    fetch(`http://localhost:3000/artworks/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedData),
@@ -63,8 +63,8 @@ const MyGallery = () => {
 
           setArtworks((prev) =>
             prev.map((art) =>
-              art._id === id ? { ...art, ...updatedData } : art
-            )
+              art._id === id ? { ...art, ...updatedData } : art,
+            ),
           );
         } else {
           toast.info("No changes made", { position: "top-center" });
@@ -95,17 +95,19 @@ const MyGallery = () => {
   }
 
   return (
-    <div>
-      <h1 className="text-center text-5xl font-black py-5 my-2 bg-[#0f12b936]">
-        MyGallery
-      </h1>
+    <div className="dark:bg-[#3c3d4d]">
+      <div className="dark:bg-[#242531] py-4 rounded-sm flex justify-center">
+        <h1 className="text-center lg:text-left text-5xl py-4 font-bold bg-linear-to-r from-[#900101] to-[#0c29bb] dark:from-[#4ca2f8] bg-clip-text text-transparent">
+          MyGallery
+        </h1>
+      </div>
 
       {userArtworks.length === 0 ? (
         <h2 className="text-center text-3xl font-semibold py-3 my-1 bg-[#b90f0f8c]">
           You don’t have any artwork.
         </h2>
       ) : (
-        <div className="grid lg:grid-cols-2 gap-4">
+        <div className="grid lg:grid-cols-2 gap-4 px-[2%]">
           {userArtworks.map((data) => (
             <GalleryCard
               key={data._id}

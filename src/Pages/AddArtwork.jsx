@@ -36,7 +36,7 @@ const AddArtwork = () => {
       totalLike: 0,
     };
     // Send data to server
-    fetch("https://artify-server-site-navy.vercel.app/artworks", {
+    fetch("http://localhost:3000/artworks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,91 +55,103 @@ const AddArtwork = () => {
   };
 
   return (
-    <div className="card bg-base-100 mx-auto my-8 w-full max-w-md shrink-0 shadow-2xl">
+    <div className="card bg-base-100 mx-auto my-8 w-full md:w-3/4 shrink-0 shadow-2xl dark:bg-[#333]">
       <div className="card-body">
-        <h1 className="text-center lg:text-left text-5xl font-semibold py-4">
-          Adding your artwork data.
-        </h1>
+        <div className="dark:bg-[#242531] py-4 rounded-sm">
+          <h1 className="text-center lg:text-left text-5xl py-4 font-bold bg-linear-to-r from-[#900101] to-[#0c29bb] dark:from-[#4ca2f8] bg-clip-text text-transparent">
+            Adding your artwork data
+          </h1>
+        </div>
         <form onSubmit={handleAddBtn}>
           <fieldset className="fieldset">
-            {/* Name */}
-            <label className="label">Name</label>
+            {/* Name */}{" "}
+            <label className="label py-1 mt-4 text-[#0F172A] text-[14px] dark:text-white font-semibold">
+              Name
+            </label>
             <input
               type="text"
               name="name"
-              className="input w-full"
+              className="input w-full dark:bg-[#1a1f2c]  dark:text-white/80 dark:placeholder:text-white/90 outline-none dark:focus:border-[#a6acb6] focus:border-[#5e86c7]"
               defaultValue={user?.displayName}
               readOnly
             />
-
             {/* PhotoURL */}
-            <label className="label">Artist PhotoURL</label>
+            <label className="label py-1 mt-4 text-[#0F172A] text-[14px] dark:text-white font-semibold">
+              Artist PhotoURL
+            </label>
             <input
               type="url"
               name="artistPhotoURL"
-              className="input w-full"
+              className="input w-full dark:bg-[#1a1f2c]  dark:text-white/80 dark:placeholder:text-white/90 outline-none dark:focus:border-[#a6acb6] focus:border-[#5e86c7]"
               defaultValue={user.photoURL}
               readOnly
             />
             {/* Email */}
-            <label className="label">Email</label>
+            <label className="label py-1 mt-4 text-[#0F172A] text-[14px] dark:text-white font-semibold">
+              Email
+            </label>
             <input
               type="email"
               name="email"
-              className="input w-full"
+              className="input w-full dark:bg-[#1a1f2c]  dark:text-white/80 dark:placeholder:text-white/90 outline-none dark:focus:border-[#a6acb6] focus:border-[#5e86c7]"
               defaultValue={user?.email}
               readOnly
             />
-
             {/* Artwork Photo URL */}
-            <label className="label">Artwork Photo URL</label>
+            <label className="label py-1 mt-4 text-[#0F172A] text-[14px] dark:text-white font-semibold">
+              Artwork Photo URL
+            </label>
             <input
               type="url"
               name="photoUrl"
-              className="input w-full"
+              className="input w-full dark:bg-[#1a1f2c]  dark:text-white/80 dark:placeholder:text-white/90 outline-none dark:focus:border-[#a6acb6] focus:border-[#5e86c7]"
               placeholder="Artwork Photo URL"
               required
             />
-
             {/* Artwork Title */}
-            <label className="label">Artwork Title</label>
+            <label className="label py-1 mt-4 text-[#0F172A] text-[14px] dark:text-white font-semibold">
+              Artwork Title
+            </label>
             <input
               type="text"
               name="artworkTitle"
-              className="input w-full"
+              className="input w-full dark:bg-[#1a1f2c]  dark:text-white/80 dark:placeholder:text-white/90 outline-none dark:focus:border-[#a6acb6] focus:border-[#5e86c7]"
               placeholder="Artwork Title"
               required
             />
-
             {/* Artwork Description */}
-            <label className="label">Artwork Description</label>
+            <label className="label py-1 mt-4 text-[#0F172A] text-[14px] dark:text-white font-semibold">
+              Artwork Description
+            </label>
             <textarea
               name="artworkDescription"
-              className="textarea w-full"
+              className="w-full border border-[#0000002c] rounded-lg p-3 dark:bg-[#1a1f2c]  dark:text-white/80 dark:placeholder:text-white/90 outline-none dark:focus:border-[#a6acb6] focus:border-[#5e86c7]"
               rows="5"
               placeholder="Artwork Description"
               required
             ></textarea>
-
             {/* Visibility */}
-            <label className="label">Visibility</label>
+            <label className="label py-1 mt-4 text-[#0F172A] text-[14px] dark:text-white font-semibold">
+              Visibility
+            </label>
             <select
               onChange={(e) => setVisibility(e.target.value)}
               defaultValue="Visibility"
-              className="select select-md w-full"
+              className="input w-full dark:bg-[#1a1f2c]  dark:text-white/80 dark:placeholder:text-white/90 outline-none dark:focus:border-[#a6acb6] focus:border-[#5e86c7]"
               required
             >
               <option disabled>Visibility</option>
               <option>Public</option>
               <option>Private</option>
             </select>
-
             {/* Category */}
-            <label className="label">Category</label>
+            <label className="label py-1 mt-4 text-[#0F172A] text-[14px] dark:text-white font-semibold">
+              Category
+            </label>
             <select
               onChange={(e) => setCategory(e.target.value)}
               defaultValue="Category"
-              className="select select-md w-full"
+              className="input w-full dark:bg-[#1a1f2c]  dark:text-white/80 dark:placeholder:text-white/90 outline-none dark:focus:border-[#a6acb6] focus:border-[#5e86c7]"
               required
             >
               <option disabled>Category</option>
@@ -150,9 +162,10 @@ const AddArtwork = () => {
               <option>Architecture</option>
               <option>Literature</option>
             </select>
-
             {/* Medium / Tools */}
-            <label className="label">Medium/Tools</label>
+            <label className="label py-1 mt-4 text-[#0F172A] text-[14px] dark:text-white font-semibold">
+              Medium/Tools
+            </label>
             <div className="w-full grid grid-cols-2 gap-1 ml-4">
               {[
                 "Digital Tools",
@@ -164,16 +177,18 @@ const AddArtwork = () => {
               ].map((tool) => (
                 <div key={tool} className="flex items-center gap-1">
                   <input
+                    id={`${tool}`}
                     type="checkbox"
                     value={tool}
                     onChange={handleCheckboxChange}
-                    className="checkbox"
+                    className="checkbox dark:bg-white/80 dark:text-[#000dbd] font-semibold"
                   />
-                  <label>{tool}</label>
+                  <label className="cursor-pointer" htmlFor={`${tool}`}>
+                    {tool}
+                  </label>
                 </div>
               ))}
             </div>
-
             <button type="submit" className="btn btn-neutral mt-4">
               Add Artwork
             </button>

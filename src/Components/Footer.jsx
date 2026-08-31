@@ -5,10 +5,12 @@ const Footer = () => {
     <footer className="p-8">
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 py-4">
         {/* "footer sm:footer-horizontal bg-base-300 text-base-content p-10" */}
-        <div className="mt-8 lg:mt-0 w-full sm:col-span-2">
-          <h1 className="text-3xl font-bold">ARTIFY Industries Ltd.</h1>
-          <p>Providing reliable tech since 2025</p>
-          <div className="footer-section contact">
+        <div className="mt-8 sm:mt-0 w-full sm:col-span-2">
+          <h1 className="text-4xl font-bold bg-[#be0d0d1f] bg-linear-to-r from-[#900101] to-[#00188e] dark:from-[#3a9dff] bg-clip-text text-transparent">
+            ARTIFY Industries Ltd.
+          </h1>
+          <p className="dark:text-white/80 text-black/89">Providing reliable tech since 2025</p>
+          <div className="footer-section contact lg:mt-0 mt-8">
             <h2 className="footer-title mt-2 mb-[-5px] underline">
               Contact Info:
             </h2>
@@ -94,7 +96,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+      <div className="footer sm:footer-horizontal footer-center bg-base-300 dark:bg-[#2d3c53] text-base-content p-4 dark:text-white rounded-md">
         <aside>
           <p>
             Copyright © {new Date().getFullYear()} - All right reserved by

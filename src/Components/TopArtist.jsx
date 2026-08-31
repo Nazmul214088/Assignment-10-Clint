@@ -4,9 +4,11 @@ import topArtist from "../assets/04.png";
 const TopArtist = () => {
   return (
     <div>
-      <h1 className="text-center text-5xl font-black py-5 my-2 bg-[#0f12b936]">
-        Top Artist of the Week
-      </h1>
+      <div className="dark:bg-[#333] py-4 rounded-sm">
+        <h1 className="my-2 text-6xl text-center font-bold bg-linear-to-r from-[#900101] to-[#00188e] dark:from-[#3a9dff] bg-clip-text text-transparent">
+          Top Artist of the Week
+        </h1>
+      </div>
       <div className="p-4 flex flex-col gap-4 lg:flex-row">
         <div className="basis-1/2">
           <img src={topArtist} className="w-full rounded-lg shadow-2xl" />

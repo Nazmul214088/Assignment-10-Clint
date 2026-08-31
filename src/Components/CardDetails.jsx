@@ -14,7 +14,7 @@ const CardDetails = () => {
 
   const [totalWork, setTotalWork] = useState(0);
   useEffect(() => {
-    fetch("https://artify-server-site-navy.vercel.app/artworks")
+    fetch("http://localhost:3000/artworks")
       .then((res) => res.json())
       .then((data) => {
         const userEmail = artwork.email;
@@ -32,15 +32,11 @@ const CardDetails = () => {
       try {
         setLoading(true);
 
-        const res = await fetch(
-          `https://artify-server-site-navy.vercel.app/artworks/${artworkId}`,
-          {
-            signal: controller.signal,
-          }
-        );
+        const res = await fetch(`http://localhost:3000/artworks/${artworkId}`, {
+          signal: controller.signal,
+        });
 
         if (!res.ok) {
-          // fallback to location.state data (prevents blank + spinner stuck)
           setArtwork(artworkData || null);
           setLike(Number(artworkData?.totalLike ?? 0));
           return;
@@ -50,6 +46,7 @@ const CardDetails = () => {
         setArtwork(data);
         setLike(Number(data?.totalLike ?? 0));
       } catch (err) {
+        console.log(err.message);
         setArtwork(artworkData || null);
         setLike(Number(artworkData?.totalLike ?? 0));
       } finally {
@@ -58,7 +55,7 @@ const CardDetails = () => {
     })();
 
     return () => controller.abort();
-  }, [artworkId]);
+  }, [artworkId, artworkData, setLoading]);
 
   if (!artwork) return <div className="p-6">No artwork data found.</div>;
 
@@ -75,14 +72,11 @@ const CardDetails = () => {
     try {
       const payload = { ...artwork, myEmail: user?.email };
 
-      const res = await fetch(
-        `https://artify-server-site-navy.vercel.app/favorite/${user.email}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
+      const res = await fetch(`http://localhost:3000/favorite/${user.email}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
       const result = await res.json();
       if (result.insertedId) {
@@ -106,14 +100,11 @@ const CardDetails = () => {
     setLike(prev + 1);
 
     try {
-      const res = await fetch(
-        `https://artify-server-site-navy.vercel.app/artworks/${_id}/like`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userEmail: user.email }),
-        }
-      );
+      const res = await fetch(`http://localhost:3000/artworks/${_id}/like`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userEmail: user.email }),
+      });
 
       const data = await res.json();
 
@@ -139,18 +130,18 @@ const CardDetails = () => {
   };
 
   return (
-    <div className="card bg-base-100 w-full px-10 shadow-sm">
-      <div className="md:flex md:justify-between w-full">
+    <div className="card bg-base-100 w-full mt-6 px-10 shadow-sm dark:bg-[#141d38]">
+      <div className="md:flex md:justify-between w-full my-4 rounded-lg dark:bg-[#24345e]">
         <figure className="basis-1/2">
           <img className="w-full rounded-xl" src={artworkPhotoUrl} alt="art" />
         </figure>
 
-        <div className="card-body grid content-between">
+        <div className="card-body grid content-between ">
           <div>
-            <h2 className="text-3xl font-bold">Title: {artworkTitle}</h2>
-            <h2 className="text-2xl">
-              <span className="font-semibold">Artist Name: </span> {artistName}
+            <h2 className=" text-4xl font-black bg-linear-to-r from-[#900101] to-[#00188e] dark:from-[#3a9dff] bg-clip-text text-transparent">
+              {artworkTitle}
             </h2>
+            <h2 className="text-xl italic mb-6">{artistName}</h2>
 
             <h2 className="text-lg">
               <span className="font-semibold">Medium/Tools:</span> <br />
@@ -165,7 +156,7 @@ const CardDetails = () => {
           <div className="text-center flex justify-between">
             <button
               onClick={handleAddToFavoriteBtn}
-              className="btn btn-lg mt-4 text-xl transition duration-500 hover:shadow-[0_4px_15px_#0c17b8b4]"
+              className="btn btn-lg mt-4 text-xl dark:text-white dark:bg-[#004688] transition duration-500 hover:shadow-[0_4px_15px_#0c17b8b4] border-none"
             >
               Add to Favorite
             </button>
@@ -173,7 +164,7 @@ const CardDetails = () => {
             <div className="flex items-center gap-2">
               <span className="mt-4 text-xl">{like}</span>
               <button
-                className="btn btn-lg mt-4 text-xl transition duration-500 hover:shadow-[0_4px_15px_#0c17b8b4]"
+                className="btn btn-lg mt-4 text-xl transition duration-500 hover:shadow-[0_4px_15px_#0c17b8b4] dark:text-white dark:bg-[#15008b] border-none"
                 onClick={handleLikeBtn}
               >
                 Like
@@ -183,26 +174,26 @@ const CardDetails = () => {
         </div>
       </div>
 
-      <div className="card-body">
-        <p className="text-justify">
+      <div>
+        <p className="text-justify dark:bg-[#24345e] px-2 py-4 rounded-md">
           <span className="font-bold">Description:</span> {artworkDescription}
         </p>
-
-        <h1 className="text-4xl font-bold bg-[#be0d0d1f] py-4 text-center">
-          Artist Info:
-        </h1>
-
-        <div className="md:flex items-center justify-around gap-6">
+        <div className="dark:bg-[#24345e] mt-4">
+          <h1 className="text-4xl font-extrabold bg-[#be0d0d1f] py-4 text-center  bg-linear-to-r from-[#900101] to-[#00188e] dark:from-[#3a9dff] bg-clip-text text-transparent">
+            Artist Info:
+          </h1>
+        </div>
+        <div className="sm:flex items-center justify-around gap-6 mt-4">
           <div>
             <h2 className="text-2xl">
-              <span className="font-bold">Artist Name:</span> {artistName}
+              <span className="font-bold">Name:</span> {artistName}
             </h2>
             <p className=" text-xl my-2">
               <span className="font-semibold">Total work:</span> {totalWork}
             </p>
           </div>
           <img
-            className="h-30 rounded-lg my-2 shadow-[0_4px_15px_#0c17b8b4]"
+            className="h-25 rounded-md my-2 border-2 border-[#73040460]"
             src={artistPhotoUrl}
             alt="ArtistPhoto"
           />
