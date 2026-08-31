@@ -78,7 +78,10 @@ const Navbar = () => {
             {privateLinks}
           </ul>
         </div>
-        <Link className="btn btn-ghost text-lg text-center font-extrabold bg-linear-to-r from-[#900101] to-[#00188e] dark:from-[#3a9dff] bg-clip-text text-transparent" to={"/"}>
+        <Link
+          className="btn btn-ghost text-lg text-center font-extrabold bg-linear-to-r from-[#900101] to-[#00188e] dark:from-[#3a9dff] bg-clip-text text-transparent"
+          to={"/"}
+        >
           ARTIFY
         </Link>
       </div>
@@ -89,7 +92,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <ul className="menu menu-horizontal px-1 items-center">
+        <ul className="menu menu-horizontal px-1 flex items-center">
           {user ? (
             <li className="dropdown">
               <div tabIndex={0} role="button" className=" cursor-pointer">
@@ -118,13 +121,13 @@ const Navbar = () => {
           )}
           <li className="w-15 h-15 rounded-full ">
             <button
-              className="btn mx-2 md:w-14 md:h-14 dark:bg-[#747d8c] "
+              className="btn mx-2 dark:bg-[#747d8c] "
               onClick={themeToggle}
             >
               {theme === "dark" ? (
-                <MdDarkMode className="text-white text-2xl md:text-4xl" />
+                <MdDarkMode className="text-white text-2xl" />
               ) : (
-                <CiLight className="text-2xl md:text-4xl text-[#ffa600] font-black" />
+                <CiLight className="text-2xl text-[#ffa600] font-black" />
               )}
             </button>
           </li>

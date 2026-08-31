@@ -10,7 +10,7 @@ const MyFavorites = () => {
   useEffect(() => {
     // Fetches artworks sorted from newest to oldest
     if (!user) return;
-    fetch("http://localhost:3000/favorite")
+    fetch("https://assignment-10-server-kappa-henna.vercel.app/favorite")
       .then((res) => res.json())
       .then((data) => {
         const filterData = data.filter((d) => d.myEmail === user.email);
@@ -20,9 +20,12 @@ const MyFavorites = () => {
 
   // Delete favorites
   const handleDelete = (id) => {
-    fetch(`http://localhost:3000/favorite/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://assignment-10-server-kappa-henna.vercel.app/favorite/${id}`,
+      {
+        method: "DELETE",
+      },
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {

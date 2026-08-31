@@ -11,7 +11,7 @@ const MyGallery = () => {
   // Fetch all artworks
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:3000/artworks")
+    fetch("https://assignment-10-server-kappa-henna.vercel.app/artworks")
       .then((res) => res.json())
       .then((data) => setArtworks(Array.isArray(data) ? data : []))
       .catch((err) => console.error(err))
@@ -27,9 +27,12 @@ const MyGallery = () => {
 
   // Delete artwork
   const handleDelete = (id) => {
-    fetch(`http://localhost:3000/artworks/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://assignment-10-server-kappa-henna.vercel.app/artworks/${id}`,
+      {
+        method: "DELETE",
+      },
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -49,11 +52,14 @@ const MyGallery = () => {
 
   // Update artwork
   const handleUpdate = (id, updatedData) => {
-    fetch(`http://localhost:3000/artworks/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedData),
-    })
+    fetch(
+      `https://assignment-10-server-kappa-henna.vercel.app/artworks/${id}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedData),
+      },
+    )
       .then((res) => res.json())
       .then((result) => {
         if (result.modifiedCount > 0) {

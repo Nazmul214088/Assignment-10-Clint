@@ -7,7 +7,7 @@ const ExploreArtworks = () => {
   const [artworks, setArtworks] = useState([]); // filtered + searched data
 
   useEffect(() => {
-    fetch("http://localhost:3000/artworks")
+    fetch("https://assignment-10-server-kappa-henna.vercel.app/artworks")
       .then((res) => res.json())
       .then((data) => {
         setAllArtworks(data);

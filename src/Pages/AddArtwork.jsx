@@ -36,7 +36,7 @@ const AddArtwork = () => {
       totalLike: 0,
     };
     // Send data to server
-    fetch("http://localhost:3000/artworks", {
+    fetch("https://assignment-10-server-kappa-henna.vercel.app/artworks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
